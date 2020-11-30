@@ -77,7 +77,8 @@ public class server {
 
                 //validate credentials
                 db obj = new db();
-                boolean flag = obj.checkCredentials();
+                //boolean flag = obj.checkCredentials();
+                boolean flag = true;
                 if (flag == true) {
                 	genrateQrCode qr = new genrateQrCode();
                 	JSONObject userobj = new JSONObject();
