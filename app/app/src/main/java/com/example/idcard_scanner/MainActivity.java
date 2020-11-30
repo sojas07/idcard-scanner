@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    public static EditText userNameEditText;
-    public static EditText passwordEditText;
-    public static Button loginButton;
+    EditText userNameEditText;
+    EditText passwordEditText;
+    Button loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
                 String username = userNameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 //Send credentials to server for authentication;
-                Boolean isAuthenticated = true;
-                if(isAuthenticated) {
+//                Boolean isAuthenticated = true;
+//                if(isAuthenticated) {
                     openNewActivity();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
-                }
+//                }else{
+//                    Toast.makeText(getApplicationContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
+//                }
             }
         });
     }
