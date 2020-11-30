@@ -51,7 +51,7 @@ public class client  {
             //write image
             FileOutputStream imageOutFile = new FileOutputStream(name);
             imageOutFile.write(imageByteArray);
-            imageOutFile.close();
+            imageOutFile.close();}
             System.out.println("Image Written Manipulated!");
             //Image conversion to byte array
             // FileInputStream imageInFile = new FileInputStream(file);

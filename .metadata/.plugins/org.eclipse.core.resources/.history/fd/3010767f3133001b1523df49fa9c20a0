@@ -47,11 +47,11 @@ public class client  {
             
             //decode image
             byte[] imageByteArray = decodeImage(image);
-            String name = "clientoutput.png";
+            string name = "clientoutput.png";
             //write image
             FileOutputStream imageOutFile = new FileOutputStream(name);
             imageOutFile.write(imageByteArray);
-            imageOutFile.close();
+            imageOutFile.close();}
             System.out.println("Image Written Manipulated!");
             //Image conversion to byte array
             // FileInputStream imageInFile = new FileInputStream(file);
