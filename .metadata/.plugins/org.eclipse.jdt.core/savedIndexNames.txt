@@ -1,0 +1,19 @@
+INDEX VERSION 1.131+E:\project-idcard-scanner\.metadata\.plugins\org.eclipse.jdt.core
+2196199803.index
+2073852946.index
+3867201104.index
+3257057950.index
+3173020980.index
+2461411560.index
+3781310079.index
+2081954362.index
+3027355289.index
+1141473473.index
+1292116890.index
+820715543.index
+3126434910.index
+2235267327.index
+2829577612.index
+927679266.index
+1605849814.index
+1633501913.index

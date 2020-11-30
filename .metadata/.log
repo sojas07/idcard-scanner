@@ -1,0 +1,226 @@
+!SESSION 2020-11-30 16:57:32.613 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=14.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2020-11-30 16:57:47.783
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-11-30 16:57:47.783
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7ca29311,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6493f780,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-11-30 16:58:00.217
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\DELL'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.buildship.core 2 0 2020-11-30 16:58:38.343
+!MESSAGE Failed to detect project changes
+!STACK 1
+org.eclipse.core.runtime.CoreException: SynchronizingBuildScriptUpdateListener failed
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:75)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.Project.open(Project.java:1103)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:556)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:205)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	... 15 more
+!SUBENTRY 1 org.eclipse.buildship.core 2 0 2020-11-30 16:58:38.350
+!MESSAGE SynchronizingBuildScriptUpdateListener failed
+!STACK 0
+org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.Project.open(Project.java:1103)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:556)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:205)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.buildship.core 2 0 2020-11-30 16:58:41.219
+!MESSAGE Failed to detect project changes
+!STACK 1
+org.eclipse.core.runtime.CoreException: SynchronizingBuildScriptUpdateListener failed
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:75)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:49)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	... 13 more
+!SUBENTRY 1 org.eclipse.buildship.core 2 0 2020-11-30 16:58:41.220
+!MESSAGE SynchronizingBuildScriptUpdateListener failed
+!STACK 0
+org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:49)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.buildship.core 2 0 2020-11-30 16:58:43.015
+!MESSAGE Failed to detect project changes
+!STACK 1
+org.eclipse.core.runtime.CoreException: SynchronizingBuildScriptUpdateListener failed
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:75)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2306)
+	at org.eclipse.core.internal.events.NotificationManager$NotifyJob.run(NotificationManager.java:44)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	... 14 more
+!SUBENTRY 1 org.eclipse.buildship.core 2 0 2020-11-30 16:58:43.025
+!MESSAGE SynchronizingBuildScriptUpdateListener failed
+!STACK 0
+org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: Can't read root project location for project located at E:\project-idcard-scanner\app
+	at org.eclipse.buildship.core.internal.configuration.BuildConfigurationPersistence.readPathToRoot(BuildConfigurationPersistence.java:90)
+	at org.eclipse.buildship.core.internal.configuration.DefaultConfigurationManager.loadProjectConfiguration(DefaultConfigurationManager.java:114)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.isEnabledInPreferences(SynchronizingBuildScriptUpdateListener.java:63)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.doVisitDelta(SynchronizingBuildScriptUpdateListener.java:85)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.access$000(SynchronizingBuildScriptUpdateListener.java:44)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener$1.visit(SynchronizingBuildScriptUpdateListener.java:73)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:67)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:77)
+	at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:51)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.visitDelta(SynchronizingBuildScriptUpdateListener.java:68)
+	at org.eclipse.buildship.core.internal.workspace.SynchronizingBuildScriptUpdateListener.resourceChanged(SynchronizingBuildScriptUpdateListener.java:55)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:305)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:295)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:158)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:380)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1502)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2306)
+	at org.eclipse.core.internal.events.NotificationManager$NotifyJob.run(NotificationManager.java:44)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2020-11-30 20:51:44.057 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=14.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2020-11-30 20:51:55.734
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-11-30 20:51:55.734
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5d68be4f,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@34eb5d01,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-11-30 20:52:11.065
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\DELL'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
