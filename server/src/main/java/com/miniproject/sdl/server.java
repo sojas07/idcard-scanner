@@ -24,15 +24,22 @@ import com.google.zxing.WriterException;
 //import com.google.zxing.client.j2se.MatrixToImageWriter;
 //import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
 
 public class server {
-
+    public static Connection con;
     public static byte[] decodeImage(String imageDataString) {
         return Base64.getDecoder().decode(imageDataString);
     }
     
     public static void connectToDb() {
-    	
+    	try{
+            Class.forName("com.mysql.jdbc.Driver"); 
+            con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner","root","labmangesh");
+        }catch(Exception e){
+            System.out.println("Exception in connection: " + e );
+        }
     }
     public static String encodeImage(byte[] imageByteArray) {
         return Base64.getEncoder().encodeToString(imageByteArray);
@@ -43,7 +50,7 @@ public class server {
             NotFoundException{
     	
        // while (true){
-
+            connectToDb();
             try{  
  
                 //socket connection (PORT 7777)
@@ -63,8 +70,9 @@ public class server {
                 System.out.println(password);
                 //validate credentials
                 db obj = new db();
-                //boolean flag = obj.checkCredentials();
-                boolean flag = true;
+                obj.con = con;
+                boolean flag = obj.checkCredentials(username,password);
+                //boolean flag = true;
                 if (flag == true) {
                 	genrateQrCode qr = new genrateQrCode();
                 	JSONObject userobj = new JSONObject();
