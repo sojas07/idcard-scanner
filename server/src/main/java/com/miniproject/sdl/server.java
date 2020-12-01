@@ -36,7 +36,7 @@ public class server {
     public static void connectToDb() {
     	try{
             Class.forName("com.mysql.jdbc.Driver"); 
-            con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner","root","aarvi@123");
+            con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner","root","password");
         }catch(Exception e){
             System.out.println("Exception in connection: " + e );
         }
