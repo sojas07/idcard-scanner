@@ -1,15 +1,12 @@
 package com.miniproject.sdl;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 import java.io.*;
 import java.net.Socket;
-import java.util.*;
 import java.util.Base64;
 
-public class client  implements java.io.Serializable{
+public class client {
     public static String encodeImage(byte[] imageByteArray) {
         return Base64.getEncoder().encodeToString(imageByteArray);
     }
@@ -24,7 +21,7 @@ public class client  implements java.io.Serializable{
 
             //send username password
             JSONObject obj = new JSONObject();
-            obj.put("username","sak");
+            obj.put("username","sk");
             obj.put("password","123456" );
 
             //output stream

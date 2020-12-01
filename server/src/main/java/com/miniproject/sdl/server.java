@@ -30,16 +30,17 @@ import java.sql.DriverManager;
 
 public class server {
     public static Connection con;
+
     public static byte[] decodeImage(String imageDataString) {
         return Base64.getDecoder().decode(imageDataString);
     }
 
     public static void connectToDb() {
-    	try{
-            Class.forName("com.mysql.jdbc.Driver"); 
-            con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner","root","password");
-        }catch(Exception e){
-            System.out.println("Exception in connection: " + e );
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner", "root", "password");
+        } catch (Exception e) {
+            System.out.println("Exception in connection: " + e);
         }
     }
 
@@ -47,92 +48,87 @@ public class server {
         return Base64.getEncoder().encodeToString(imageByteArray);
     }
 
-    public static void main(String[] args)
-    		throws WriterException, IOException,
-            NotFoundException{
-    	
-       // while (true){
+    public static void main(String[] args) throws WriterException, IOException, NotFoundException {
+
+        while (true) {
             connectToDb();
-            try{  
- 
-                //socket connection (PORT 7777)
-                ServerSocket welcomeSocket=new ServerSocket(7777);
+            try {
+
+                // socket connection (PORT 7777)
+                ServerSocket welcomeSocket = new ServerSocket(7777);
                 System.out.println("server started...");
-                Socket connectionSocket=welcomeSocket.accept();
-                BufferedReader inFromClient = new BufferedReader (new InputStreamReader(connectionSocket.getInputStream()));
-                DataOutputStream outToClient=new DataOutputStream(connectionSocket.getOutputStream());
-                
-                //convert received data
+                Socket connectionSocket = welcomeSocket.accept();
+                BufferedReader inFromClient = new BufferedReader(
+                        new InputStreamReader(connectionSocket.getInputStream()));
+                DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+
+                // convert received data
                 System.out.println("Credentials Received--->>!");
                 String message = inFromClient.readLine();
                 JSONObject obj1 = (JSONObject) JSONValue.parse(message);
                 String username = obj1.get("username").toString();
-                String password = obj1.get("password").toString();      
+                String password = obj1.get("password").toString();
                 System.out.println(username);
                 System.out.println(password);
-                //validate credentials
+                // validate credentials
                 db obj = new db();
                 obj.con = con;
-                boolean flag = obj.checkCredentials(username,password);
-                //boolean flag = true;
+                boolean flag = obj.checkCredentials(username, password);
+                // boolean flag = true;
                 if (flag == true) {
-                	genrateQrCode qr = new genrateQrCode();
-                	JSONObject userobj = new JSONObject();
-                	userobj.put("id", "C2K18105812");
-                	userobj.put("first_name", "Sanket");
-                	userobj.put("last-name", "Varpe");
-                	userobj.put("div", "Te-2");
-                	userobj.put("yearofstudy", "3rd");
-                	userobj.put("rollno", "31268");
-                	String data = userobj.toJSONString();
-               	
-                	String path = "output.png";
-                   // Encoding charset
-                	String charset = "UTF-8";
-                	Map<EncodeHintType, ErrorCorrectionLevel> hashMap
-                       = new HashMap<EncodeHintType,ErrorCorrectionLevel>();
-                	hashMap.put(EncodeHintType.ERROR_CORRECTION,ErrorCorrectionLevel.L);
-                	//genrate qr code
-                	
-                	qr.createQR(data, path, charset, hashMap, 200, 200);
-                	
-                	//read image genrated
-                	String file = "output.png";
-                	FileInputStream imageInFile = new FileInputStream(path);
+                    genrateQrCode qr = new genrateQrCode();
+                    JSONObject userobj = new JSONObject();
+                    userobj.put("id", "C2K18105812");
+                    userobj.put("firstName", "Sanket");
+                    userobj.put("lastName", "Varpe");
+                    userobj.put("division", "Te-2");
+                    userobj.put("yearOfStudy", "3rd");
+                    userobj.put("rollNo", "31268");
+                    String data = userobj.toJSONString();
+
+                    String path = "output.png";
+                    // Encoding charset
+                    String charset = "UTF-8";
+                    Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+                    hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+                    // genrate qr code
+
+                    qr.createQR(data, path, charset, hashMap, 200, 200);
+
+                    // read image genrated
+                    String file = "output.png";
+                    FileInputStream imageInFile = new FileInputStream(path);
                     byte imageData[] = imageInFile.readAllBytes();
                     System.out.println((imageData.length));
-                    
-                    //encode image
+
+                    // encode image
                     String imageDataString = encodeImage(imageData);
                     System.out.println(imageDataString.length());
                     imageInFile.close();
                     System.out.println("Image Successfully Manipulated!");
-                    
-                    //response
+
+                    // response
                     JSONObject responseObj = new JSONObject();
-                    responseObj.put("image",imageDataString );
-                    responseObj.put("flag",flag );
-                    //send response
-                    
+                    responseObj.put("image", imageDataString);
+                    responseObj.put("flag", flag);
+                    // send response
+
                     outToClient.writeBytes(responseObj.toJSONString());
                     System.out.println("File Sent!");
                     connectionSocket.close();
-            }else{
-            	JSONObject responseObj = new JSONObject();
-                responseObj.put("image","empty" );
-                responseObj.put("flag",flag );
-                //send response
-                
-                outToClient.writeBytes(responseObj.toJSONString());
-                System.out.println("File Sent!");
-                connectionSocket.close();
+                } else {
+                    JSONObject responseObj = new JSONObject();
+                    responseObj.put("image", "empty");
+                    responseObj.put("flag", flag);
+                    // send response
+
+                    outToClient.writeBytes(responseObj.toJSONString());
+                    System.out.println("File Sent!");
+                    connectionSocket.close();
                 }
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             }
-            catch (FileNotFoundException e) {
-            } 
-            catch (IOException e) {
-            } 
+        }
     }
 }
