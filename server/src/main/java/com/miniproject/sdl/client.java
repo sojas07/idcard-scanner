@@ -2,7 +2,6 @@ package com.miniproject.sdl;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
@@ -10,8 +9,7 @@ import java.net.Socket;
 import java.util.*;
 import java.util.Base64;
 
-public class client  {
-
+public class client  implements java.io.Serializable{
     public static String encodeImage(byte[] imageByteArray) {
         return Base64.getEncoder().encodeToString(imageByteArray);
     }
@@ -35,18 +33,35 @@ public class client  {
             DataOutputStream outToServer=new DataOutputStream(clientSocket.getOutputStream());
             
             //send to server
-            outToServer.writeBytes(obj.toJSONString());
-            System.out.println("Credentials  Sent!");
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+            outToServer.writeBytes(obj.toJSONString() + '\n');
+            outToServer.flush();
+            System.out.println("Credentials  Sent!");
             //read from server
-            BufferedReader inFromServer = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
-            String message = org.apache.commons.io.IOUtils.toString(inFromServer);
-            JSONObject obj1 = (JSONObject) JSONValue.parse(message);
-            String flag = obj1.get("flag").toString();
-            String image = obj1.get("image").toString();   
+
             
+
+
+
+            // BufferedReader inFromServer = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
+            DataInputStream is = new DataInputStream(clientSocket.getInputStream());
+        // ObjectInputStream ois = new ObjectInputStream(is);
+            // ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+            
+            
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            // String message = inFromServer.readLine();
+            // JSONObject obj1 = (JSONObject) JSONValue.parse(message);
+            // JSONObject obj1 = (JSONObject) ois.readObject();
+            // String flag = obj1.get("flag").toString();
+            // String image = obj1.get("image").toString();
+            // byte[] image = (byte[])ois.readObject();
             //decode image
-            byte[] imageByteArray = decodeImage(image);
+            int len = is.readInt();
+            byte[] imageByteArray = new byte[len];
+            is.readFully(imageByteArray);
+            // is.read(imageByteArray);
             String name = "clientoutput.png";
             //write image
             FileOutputStream imageOutFile = new FileOutputStream(name);

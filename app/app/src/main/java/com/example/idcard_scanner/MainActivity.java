@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 //                }catch (Exception e){
 //                    e.printStackTrace();
 //                }
-                new MyTask().execute();
+//                new MyTask().execute();
 //                if(isAuthenticated == true) {
-//                    openNewActivity();
+                    openQrCodeActivity();
 //                }
 //                else{
 //                    Toast.makeText(getApplicationContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void openNewActivity(){
+    public void openQrCodeActivity(){
         Intent intent = new Intent(this, QrCode.class);
         startActivity(intent);
     }

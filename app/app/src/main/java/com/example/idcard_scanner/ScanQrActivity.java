@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.HapticFeedbackConstants;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -20,7 +23,8 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
+        mScannerView = new ZXingScannerView(this); // Programmatically initialize the scanner view
+        mScannerView.setHapticFeedbackEnabled(true);
         setContentView(mScannerView);                // Set the scanner view as the content view
     }
 
@@ -40,14 +44,21 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result rawResult) {
         try {
+            Vibrator vibe = (Vibrator) getSystemService( VIBRATOR_SERVICE );
+            vibe.vibrate(50);
             JSONObject result = new JSONObject(rawResult.getText());
             Toast.makeText(getApplicationContext(),rawResult.getText(),Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, QrDetails.class);
-            intent.putExtra("data", rawResult.getText());
-            startActivity(intent);
+            openQrDetailsActivity(rawResult.getText());
         }catch(JSONException e){
             Toast.makeText(getApplicationContext(),"Error scanning code",Toast.LENGTH_SHORT).show();
         }
 
     }
+
+    public void openQrDetailsActivity(String data){
+        Intent intent = new Intent(this, QrDetails.class);
+        intent.putExtra("data", data);
+        startActivity(intent);
+    }
+
 }
