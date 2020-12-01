@@ -26,8 +26,8 @@ public class client  {
 
             //send username password
             JSONObject obj = new JSONObject();
-            obj.put("username","newImage.png");
-            obj.put("password","password" );
+            obj.put("username","sak");
+            obj.put("password","123456" );
 
             //output stream
             DataOutputStream outToServer=new DataOutputStream(clientSocket.getOutputStream());
@@ -44,6 +44,7 @@ public class client  {
             System.out.println(image.length());
             
             //decode image
+            if(flag == "true") {
             byte[] imageByteArray = decodeImage(image);
             System.out.println(imageByteArray.length);
             String name = "clientoutput.png";
@@ -51,7 +52,10 @@ public class client  {
             //write image
             FileOutputStream imageOutFile = new FileOutputStream(name);
             imageOutFile.write(imageByteArray);
-            imageOutFile.close();
+            imageOutFile.close();}
+            else {
+            	System.out.println("Invalid!!...");
+            }
             System.out.println("Image Written Manipulated!");
             clientSocket.close();
 
