@@ -19,36 +19,30 @@ public class client  implements java.io.Serializable{
     }
      public static void main(String[] args) {
 
-         //the file to convert is in the same folder as the source code
-
         try {            
             Socket clientSocket= new Socket ("localhost", 7777);
 
             //send username password
             JSONObject obj = new JSONObject();
-            obj.put("username","newImage.png");
-            obj.put("password","password" );
+            obj.put("username","sak");
+            obj.put("password","123456" );
 
             //output stream
             DataOutputStream outToServer=new DataOutputStream(clientSocket.getOutputStream());
-            
+            BufferedReader inFromServer = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
             //send to server
-            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            outToServer.writeBytes(obj.toJSONString()+"\n");
+            System.out.println("Credentials  Sent!");
 
             outToServer.writeBytes(obj.toJSONString() + '\n');
             outToServer.flush();
             System.out.println("Credentials  Sent!");
             //read from server
-
-            
-
-
-
-            // BufferedReader inFromServer = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
-            DataInputStream is = new DataInputStream(clientSocket.getInputStream());
-        // ObjectInputStream ois = new ObjectInputStream(is);
-            // ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
-            
+            String message = inFromServer.readLine();
+            JSONObject obj1 = (JSONObject) JSONValue.parse(message);
+            String flag = obj1.get("flag").toString();	
+            String image = obj1.get("image").toString();   
+            System.out.println(image.length());
             
             //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             // String message = inFromServer.readLine();
@@ -58,43 +52,19 @@ public class client  implements java.io.Serializable{
             // String image = obj1.get("image").toString();
             // byte[] image = (byte[])ois.readObject();
             //decode image
-            int len = is.readInt();
-            byte[] imageByteArray = new byte[len];
-            is.readFully(imageByteArray);
-            // is.read(imageByteArray);
+            if(flag == "true") {
+            byte[] imageByteArray = decodeImage(image);
+            System.out.println(imageByteArray.length);
             String name = "clientoutput.png";
+            
             //write image
             FileOutputStream imageOutFile = new FileOutputStream(name);
             imageOutFile.write(imageByteArray);
-            imageOutFile.close();
+            imageOutFile.close();}
+            else {
+            	System.out.println("Invalid!!...");
+            }
             System.out.println("Image Written Manipulated!");
-            //Image conversion to byte array
-            // FileInputStream imageInFile = new FileInputStream(file);
-            // byte imageData[] = new byte[(int) file.length()];
-            // imageInFile.read(imageData);
-
-            //Image conversion byte array in Base64 String
-            // String imageDataString = encodeImage(imageData);
-            // imageInFile.close();
-            // System.out.println("Image Successfully Manipulated!");
-
-            // //the object that will be send to Server
-            // JSONObject obj = new JSONObject();
-
-            // //name of the image
-            // obj.put("filename","newImage.png");
-            // //string obteined by the conversion of the image
-            // obj.put("image",imageDataString );
-
-            // //connection to erver
-            // Socket clientSocket= new Socket ("localhost", 7777);
-           
-            
-            // //send data
-            // outToServer.writeBytes(obj.toJSONString());
-            // System.out.println("File Sent!");
-            
-            //closing connection
             clientSocket.close();
 
         } catch (FileNotFoundException e) {

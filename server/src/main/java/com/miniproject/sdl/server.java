@@ -25,160 +25,114 @@ import com.google.zxing.WriterException;
 //import com.google.zxing.client.j2se.MatrixToImageWriter;
 //import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
 
-public class server implements java.io.Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class server {
+    public static Connection con;
     public static byte[] decodeImage(String imageDataString) {
         return Base64.getDecoder().decode(imageDataString);
     }
 
     public static void connectToDb() {
-
+    	try{
+            Class.forName("com.mysql.jdbc.Driver"); 
+            con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner","root","password");
+        }catch(Exception e){
+            System.out.println("Exception in connection: " + e );
+        }
     }
 
     public static String encodeImage(byte[] imageByteArray) {
         return Base64.getEncoder().encodeToString(imageByteArray);
     }
 
-    // @SuppressWarnings("deprecation")
-    // public static void createQR(String data, String path,
-    // String charset, Map hashMap,
-    // int height, int width)
-    // throws WriterException, IOException
-    // {
-    //
-    // BitMatrix matrix = new MultiFormatWriter().encode(
-    // new String(data.getBytes(charset), charset),
-    // BarcodeFormat.QR_CODE, width, height);
-    //
-    // MatrixToImageWriter.writeToFile(
-    // matrix,
-    // path.substring(path.lastIndexOf('.') + 1),
-    // new File(path));
-    // }
-    public static void main(String[] args) throws WriterException, IOException, NotFoundException {
-
-        while (true) {
-
-            try {
-
-                // socket connection (PORT 7777)
-                ServerSocket welcomeSocket = new ServerSocket(7777);
-                Socket connectionSocket = welcomeSocket.accept();
-                BufferedReader inFromClient = new BufferedReader(
-                        new InputStreamReader(connectionSocket.getInputStream()));
-                DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-                // convert received data
+    public static void main(String[] args)
+    		throws WriterException, IOException,
+            NotFoundException{
+    	
+       // while (true){
+            connectToDb();
+            try{  
+ 
+                //socket connection (PORT 7777)
+                ServerSocket welcomeSocket=new ServerSocket(7777);
+                System.out.println("server started...");
+                Socket connectionSocket=welcomeSocket.accept();
+                BufferedReader inFromClient = new BufferedReader (new InputStreamReader(connectionSocket.getInputStream()));
+                DataOutputStream outToClient=new DataOutputStream(connectionSocket.getOutputStream());
+                
+                //convert received data
                 System.out.println("Credentials Received--->>!");
-
-                // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-                String message = (inFromClient).readLine();
+                String message = inFromClient.readLine();
                 JSONObject obj1 = (JSONObject) JSONValue.parse(message);
-                String name = obj1.get("username").toString();
-                String image = obj1.get("password").toString();
-
-                // validate credentials
-                // db obj = new db();
-                // boolean flag = obj.checkCredentials();
-                boolean flag = true;
+                String username = obj1.get("username").toString();
+                String password = obj1.get("password").toString();      
+                System.out.println(username);
+                System.out.println(password);
+                //validate credentials
+                db obj = new db();
+                obj.con = con;
+                boolean flag = obj.checkCredentials(username,password);
+                //boolean flag = true;
                 if (flag == true) {
-                    genrateQrCode qr = new genrateQrCode();
-                    JSONObject userobj = new JSONObject();
-                    userobj.put("id", "C2K18105812");
-                    userobj.put("firstName", "Sanket");
-                    userobj.put("lastName", "Varpe");
-                    userobj.put("division", "Te-2");
-                    userobj.put("yearofstudy", "3rd");
-                    userobj.put("rollno", "31268");
-                    String data = userobj.toJSONString();
-
-                    // The path where the image will get saved
-                    String path = "output.png";
-                    // Encoding charset
-                    String charset = "UTF-8";
-                    Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-                    hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-                    // genrate qr code
-
-                    genrateQrCode.createQR(data, path, charset, hashMap, 200, 200);
-
-                    // read image genrated
-                    String file = "output.png";
-                    FileInputStream imageInFile = new FileInputStream(file);
+                	genrateQrCode qr = new genrateQrCode();
+                	JSONObject userobj = new JSONObject();
+                	userobj.put("id", "C2K18105812");
+                	userobj.put("first_name", "Sanket");
+                	userobj.put("last-name", "Varpe");
+                	userobj.put("div", "Te-2");
+                	userobj.put("yearofstudy", "3rd");
+                	userobj.put("rollno", "31268");
+                	String data = userobj.toJSONString();
+               	
+                	String path = "output.png";
+                   // Encoding charset
+                	String charset = "UTF-8";
+                	Map<EncodeHintType, ErrorCorrectionLevel> hashMap
+                       = new HashMap<EncodeHintType,ErrorCorrectionLevel>();
+                	hashMap.put(EncodeHintType.ERROR_CORRECTION,ErrorCorrectionLevel.L);
+                	//genrate qr code
+                	
+                	qr.createQR(data, path, charset, hashMap, 200, 200);
+                	
+                	//read image genrated
+                	String file = "output.png";
+                	FileInputStream imageInFile = new FileInputStream(path);
+                    byte imageData[] = imageInFile.readAllBytes();
+                    System.out.println((imageData.length));
                     
-                    // byte imageData[] = new byte[(int) file.length()];
-                    // imageInFile.read(imageData);
-
-                    // encode image
-                    byte[] imageDataString = imageInFile.readAllBytes();
-                    
+                    //encode image
+                    String imageDataString = encodeImage(imageData);
+                    System.out.println(imageDataString.length());
                     imageInFile.close();
                     System.out.println("Image Successfully Manipulated!");
-                    // response
-
-                    // JSONObject responseObj = new JSONObject();
-                    // string obteined by the conversion of the image
-                    // responseObj.put("image",imageDataString );
-                    // responseObj.put("flag",flag );
-                    // send response
-                    // System.out.println(imageDataString);
-
-                    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-                    // outObj.writeObject(responseObj);
-                    outToClient.writeInt(imageDataString.length);
-                    outToClient.flush();
-
-                    outToClient.write(imageDataString);
-                    outToClient.flush();
-
-                    System.out.println("File Sent!");
-                    // outToClient.writeBytes(responseObj.toJSONString() + '\n');
                     
-                    // convert byte array to a file image
-                    // FileOutputStream imageOutFile = new FileOutputStream(name);
-                    // imageOutFile.write(imageByteArray);
-                    // imageOutFile.close();}
-                    // System.out.println("Image Successfully Manipulated!");
-                } else {
+                    //response
                     JSONObject responseObj = new JSONObject();
-                    // string obteined by the conversion of the image
-                    responseObj.put("image", "empty");
-                    responseObj.put("flag", flag);
-                    // send response
-
+                    responseObj.put("image",imageDataString );
+                    responseObj.put("flag",flag );
+                    //send response
+                    
                     outToClient.writeBytes(responseObj.toJSONString());
                     System.out.println("File Sent!");
+                    connectionSocket.close();
+            }else{
+            	JSONObject responseObj = new JSONObject();
+                responseObj.put("image","empty" );
+                responseObj.put("flag",flag );
+                //send response
+                
+                outToClient.writeBytes(responseObj.toJSONString());
+                System.out.println("File Sent!");
+                connectionSocket.close();
                 }
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             }
-        }
-        // JSONObject obj = new JSONObject();
-        // obj.put("id", "C2K18105812");
-        // obj.put("name", "Sanket");
-        // obj.put("last-name", "Varpe");
-        //
-        // String data = obj.toJSONString();
-        //
-        // // The path where the image will get saved
-        // String path = "demo1.png";
-        //
-        // // Encoding charset
-        // String charset = "UTF-8";
-        //
-        // Map<EncodeHintType, ErrorCorrectionLevel> hashMap
-        // = new HashMap<EncodeHintType,
-        // ErrorCorrectionLevel>();
-        //
-        // hashMap.put(EncodeHintType.ERROR_CORRECTION,
-        // ErrorCorrectionLevel.L);
-        //
-        // // Create the QR code and save
-        // // in the specified folder
-        // // as a jpg file
-        // createQR(data, path, charset, hashMap, 200, 200);
-        // System.out.println("QR Code Generated!!! ");
+            catch (FileNotFoundException e) {
+            } 
+            catch (IOException e) {
+            } 
     }
 }
