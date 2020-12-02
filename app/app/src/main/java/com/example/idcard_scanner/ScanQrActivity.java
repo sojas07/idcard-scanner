@@ -1,8 +1,11 @@
 package com.example.idcard_scanner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -47,10 +50,9 @@ public class ScanQrActivity extends AppCompatActivity implements ZXingScannerVie
             Vibrator vibe = (Vibrator) getSystemService( VIBRATOR_SERVICE );
             vibe.vibrate(50);
             JSONObject result = new JSONObject(rawResult.getText());
-            Toast.makeText(getApplicationContext(),rawResult.getText(),Toast.LENGTH_SHORT).show();
             openQrDetailsActivity(rawResult.getText());
         }catch(JSONException e){
-            Toast.makeText(getApplicationContext(),"Error scanning code",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Oops...There was an error scanning this QR Code",Toast.LENGTH_SHORT).show();
         }
 
     }

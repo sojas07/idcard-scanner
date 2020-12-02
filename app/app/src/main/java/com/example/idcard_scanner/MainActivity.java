@@ -24,6 +24,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.Base64;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,16 +39,16 @@ public class MainActivity extends AppCompatActivity {
         userNameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
-
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File directory = cw.getDir("data", Context.MODE_PRIVATE);
+        File file = new File(directory, "qrcode" + ".png");
+        if(file.exists()){
+            openQrCodeActivity();
+        }
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                Toast.makeText(getApplicationContext(),"Authenticating. Please wait....",Toast.LENGTH_SHORT).show();
                 new LoginTask().execute();
-//                if(isAuthenticated == true) {
-//                    openQrCodeActivity();
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
-//                }
             }
         });
     }
@@ -77,26 +79,21 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject obj = new JSONObject();
                 obj.put("username", username);
                 obj.put("password", password);
-
                 //output stream
                 DataOutputStream outToServer=new DataOutputStream(clientSocket.getOutputStream());
                 BufferedReader inFromServer = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
-                //send to server
-//                outToServer.writeBytes(obj.toString() + "\n");
-//                System.out.println("Credentials  Sent!");
 
                 outToServer.writeBytes(obj.toString()+ '\n');
                 outToServer.flush();
-                System.out.println("Credentials  Sent!");
                 //read from server
                 String message = inFromServer.readLine();
+
                 JSONObject obj1 = (JSONObject) JSONValue.parse(message);
                 result = (Boolean) obj1.get("flag");
                 String image = obj1.get("image").toString();
 
                 if(result == true) {
                     byte[] imageByteArray = decodeImage(image);
-//                    System.out.println(imageByteArray.length);
                     //write image
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File directory = cw.getDir("data", Context.MODE_PRIVATE);
@@ -113,7 +110,12 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (FileNotFoundException e) {
                 System.out.println("Image not found" + e);
-            } catch (IOException ioe) {
+            } catch(SocketTimeoutException e){
+                Toast.makeText(getApplicationContext(),"Request timeout",Toast.LENGTH_SHORT).show();
+            } catch (SocketException e){
+                Toast.makeText(getApplicationContext(),"Connection error",Toast.LENGTH_SHORT).show();
+            }
+            catch (IOException ioe) {
                 System.out.println("Exception while reading the Image " + ioe);
             }
             return null;
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(result){
+                Toast.makeText(getApplicationContext(),"Login successful",Toast.LENGTH_SHORT).show();
                 openQrCodeActivity();
             }
             else{
@@ -132,24 +135,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-//    public boolean authenticateUser() throws IOException {
-//        String username = userNameEditText.getText().toString();
-//        String password = passwordEditText.getText().toString();
-//        JSONObject credentials = new JSONObject();
-//        try {
-//            credentials.put("username", username);
-//            credentials.put("password", password);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        String serverAddress = "192.168.0.101";
-//        int port=7777;
-//        Socket client = new Socket(serverAddress, port);
-//        DataOutputStream out=new DataOutputStream(client.getOutputStream());
-//        out.writeBytes(credentials.toString());
-//
-//        DataInputStream in=new DataInputStream(client.getInputStream());
-//        System.out.println("Message from Server: "+in.readUTF());
-//        client.close();
-//        return true;
-//    }

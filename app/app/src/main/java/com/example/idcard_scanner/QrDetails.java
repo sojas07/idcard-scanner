@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public class QrDetails extends AppCompatActivity {
         try {
             setQrData(new JSONObject(jsonString));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Oops...There was an error scanning this QR Code",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -37,44 +38,6 @@ public class QrDetails extends AppCompatActivity {
         id.setText(data.getString("id"));
         yearofstudy.setText(data.getString("yearOfStudy"));
         division.setText(data.getString("division"));
-
-
-
-
-
-
-
-
-
-
-
-//        JSONArray fieldNames = data.names();
-//        int totalFields = data.length();
-//        TextView[] textArray = new TextView[totalFields];
-//        TableRow[] tr_head = new TableRow[totalFields];
-//
-//        for(int i=0; i<totalFields;i++) {
-////Create the tablerows
-//            tr_head[i] = new TableRow(this);
-//            tr_head[i].setId(i + 1);
-//            tr_head[i].setBackgroundColor(Color.GRAY);
-//            tr_head[i].setLayoutParams(new TableLayout.LayoutParams(
-//                    TableLayout.LayoutParams.MATCH_PARENT,
-//                    TableLayout.LayoutParams.WRAP_CONTENT));
-//
-//            // Here create the TextView dynamically
-//
-//            textArray[i] = new TextView(this);
-//            textArray[i].setId(i + 111);
-//            textArray[i].setText("productDescription");
-//            textArray[i].setTextColor(Color.WHITE);
-//            textArray[i].setPadding(5, 5, 5, 5);
-//            tr_head[i].addView(textArray[i]);
-//            tl.addView(tr_head[i], new TableLayout.LayoutParams(
-//                    TableLayout.LayoutParams.MATCH_PARENT,
-//                    TableLayout.LayoutParams.WRAP_CONTENT));
-//
-//        }
         }
 
     }
