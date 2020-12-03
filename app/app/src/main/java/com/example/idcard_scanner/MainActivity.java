@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Base64;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -26,7 +27,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.Base64;
+//import java.util.Base64;
 
 public class MainActivity extends AppCompatActivity {
     EditText userNameEditText;
@@ -62,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
     private class LoginTask extends AsyncTask<Void, Void, Void> {
         boolean result;
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
+//        @RequiresApi(api = Build.VERSION_CODES.O)
         public byte[] decodeImage(String imageDataString) {
-            return Base64.getDecoder().decode(imageDataString);
+//            return Base64.getDecoder().decode(imageDataString);
+            return Base64.decode(imageDataString, Base64.DEFAULT);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
+//        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected Void doInBackground(Void... voids) {
             String username = userNameEditText.getText().toString();
