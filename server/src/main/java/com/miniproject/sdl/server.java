@@ -27,6 +27,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class server {
     public static Connection con;
@@ -38,7 +40,7 @@ public class server {
     public static void connectToDb() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner", "root", "password");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/idscanner", "root", "aarvi@123");
         } catch (Exception e) {
             System.out.println("Exception in connection: " + e);
         }
@@ -49,9 +51,9 @@ public class server {
     }
 
     public static void main(String[] args) throws WriterException, IOException, NotFoundException {
-
+    	connectToDb();
         while (true) {
-            connectToDb();
+            
             try {
 
                 // socket connection (PORT 7777)
@@ -68,22 +70,14 @@ public class server {
                 JSONObject obj1 = (JSONObject) JSONValue.parse(message);
                 String username = obj1.get("username").toString();
                 String password = obj1.get("password").toString();
-                System.out.println(username);
-                System.out.println(password);
+              
                 // validate credentials
                 db obj = new db();
                 obj.con = con;
-                boolean flag = obj.checkCredentials(username, password);
+                JSONObject userobj = obj.checkCredentials(username, password);
                 // boolean flag = true;
-                if (flag == true) {
+                if (!userobj.isEmpty()) {
                     genrateQrCode qr = new genrateQrCode();
-                    JSONObject userobj = new JSONObject();
-                    userobj.put("id", "C2K18105812");
-                    userobj.put("firstName", "Sanket");
-                    userobj.put("lastName", "Varpe");
-                    userobj.put("division", "Te-2");
-                    userobj.put("yearOfStudy", "3rd");
-                    userobj.put("rollNo", "31268");
                     String data = userobj.toJSONString();
 
                     String path = "output.png";
@@ -108,9 +102,10 @@ public class server {
                     System.out.println("Image Successfully Manipulated!");
 
                     // response
+                    boolean flag1 = true;
                     JSONObject responseObj = new JSONObject();
                     responseObj.put("image", imageDataString);
-                    responseObj.put("flag", flag);
+                    responseObj.put("flag", flag1);
                     // send response
 
                     outToClient.writeBytes(responseObj.toJSONString());
@@ -119,7 +114,8 @@ public class server {
                 } else {
                     JSONObject responseObj = new JSONObject();
                     responseObj.put("image", "empty");
-                    responseObj.put("flag", flag);
+                    boolean flag1 = false;
+                    responseObj.put("flag", flag1);
                     // send response
 
                     outToClient.writeBytes(responseObj.toJSONString());
@@ -128,7 +124,7 @@ public class server {
                 }
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
-            }
+            } 
         }
     }
 }
